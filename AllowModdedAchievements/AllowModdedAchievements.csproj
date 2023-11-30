@@ -1,0 +1,142 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<OutputType>Library</OutputType>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<LangVersion>latest</LangVersion>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+		<AssemblyName>AllowModdedAchievements</AssemblyName>
+		<RootNamespace>AllowModdedAchievements</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="Info.json" />
+		<Content Remove="OwlcatModificationManifest.json" />
+		<Content Remove="OwlcatModificationSettings.json" />
+		<Content Remove="Thumbnail.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Info.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="OwlcatModificationManifest.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="OwlcatModificationSettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Thumbnail.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PubliciseInputAssemblies Include="$(RoguePath)\WH40KRT_Data\Managed\Code.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aze.Publicise.MSBuild.Task" Version="1.1.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Main Wrath Assembly, Publicized -->
+		<Reference Include="Code">
+			<HintPath>$(SolutionDir)lib\Code_public.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="RogueTrader.GameCore">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\RogueTrader.GameCore.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<!-- UMM & Harmony -->
+		<Reference Include="0Harmony">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\0Harmony.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityModManager">
+			<HintPath>$(userprofile)\AppData\LocalLow\Owlcat Games\Warhammer 40000 Rogue Trader\UnityModManager\UnityModManager.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="Unity.TextMeshPro">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.AssetBundleModule">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.ImageConversionModule">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.UI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.UIModule">
+			<HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="Publicise" AfterTargets="BeforeBuild;Clean" Inputs="@(PubliciseInputAssemblies)" Outputs="$(SolutionDir)lib\%(PubliciseInputAssemblies.FileName)_public.dll;$(SolutionDir)lib\%(PubliciseInputAssemblies.FileName)_public.hash">
+		<MakeDir Directories="$(SolutionDir)lib/" />
+		<Publicise InputAssemblies="@(PubliciseInputAssemblies)" OutputPath="$(SolutionDir)lib/" PubliciseCompilerGenerated="true" />
+	</Target>
+
+	<!-- Automatically deploys the mod on build -->
+	<Target Name="Deploy" AfterTargets="Build">
+		<ItemGroup>
+			<Assembly Include="$(OutputPath)\$(AssemblyName).dll" />
+			<ModConfig Include="$(OutputPath)\Info.json" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(Assembly)" DestinationFolder="$(userprofile)\AppData\LocalLow\Owlcat Games\Warhammer 40000 Rogue Trader\UnityModManager\$(MSBuildProjectName)" />
+		<Copy SourceFiles="@(ModConfig)" DestinationFolder="$(userprofile)\AppData\LocalLow\Owlcat Games\Warhammer 40000 Rogue Trader\UnityModManager\$(MSBuildProjectName)" />
+	</Target>
+
+	<!-- Automatically creates a release zip -->
+	<Target Name="ZipRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+		<ItemGroup>
+			<Assembly Include="$(OutputPath)\$(AssemblyName).dll" />
+			<ModConfig Include="$(OutputPath)\Info.json" />
+			<OwlcatModificationManifest Include="$(OutputPath)\OwlcatModificationManifest.json" />
+			<OwlcatModificationSettings Include="$(OutputPath)\OwlcatModificationSettings.json" />
+			<Thumbnail Include="$(OutputPath)\Thumbnail.png" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(Assembly)" DestinationFolder="$(OutputPath)\$(AssemblyName)\$(AssemblyName)" />
+		<Copy SourceFiles="@(ModConfig)" DestinationFolder="$(OutputPath)\$(AssemblyName)\$(AssemblyName)" />
+		<Copy SourceFiles="@(OwlcatModificationManifest)" DestinationFolder="$(OutputPath)\$(AssemblyName)\$(AssemblyName)" />
+		<Copy SourceFiles="@(OwlcatModificationSettings)" DestinationFolder="$(OutputPath)\$(AssemblyName)\$(AssemblyName)" />
+		<Copy SourceFiles="@(Thumbnail)" DestinationFolder="$(OutputPath)\$(AssemblyName)\$(AssemblyName)" />
+
+		<MakeDir Directories="$(SolutionDir)PublishOutput" />
+		<ZipDirectory SourceDirectory="$(OutputPath)\$(AssemblyName)" DestinationFile="$(SolutionDir)PublishOutput\$(AssemblyName).zip" Overwrite="true" />
+	</Target>
+</Project>

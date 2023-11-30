@@ -1,0 +1,12 @@
+{
+  "UniqueName": "AllowModdedAchievements",
+  "Version": "1.0.0",
+  "DisplayName": "Allow Modded Achievements",
+  "Description": "Allows achievements while modded.",
+  "Author": "AlterAsc",
+  "ImageName": "Thumbnail.png",
+  "WorkshopId": "3101144901",
+  "Repository": "",
+  "HomePage": "https://github.com/alterasc/RT_AllowModdedAchievements",
+  "Dependencies": []
+}

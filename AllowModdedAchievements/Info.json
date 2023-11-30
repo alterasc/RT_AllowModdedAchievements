@@ -1,0 +1,14 @@
+{
+  "AssemblyName": "AllowModdedAchievements.dll",
+  "Author": "AlterAsc",
+  "DisplayName": "Allow Modded Achievements",
+  "EntryMethod": "AllowModdedAchievements.Main.Load",
+  "GameVersion": "1.0.0",
+  "HomePage": "https://github.com/alterasc/RT_AllowModdedAchievements",
+  "Id": "AllowModdedAchievements",
+  "ManagerVersion": "0.23.0",
+  "Repository": "https://raw.githubusercontent.com/alterasc/RT_AllowModdedAchievements/main/Repository.json",
+  "Requirements": [],
+  "LoadAfter": [],
+  "Version": "1.0.0"
+}
