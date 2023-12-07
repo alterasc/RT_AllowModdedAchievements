@@ -8,6 +8,7 @@ namespace AllowModdedAchievements;
 public static class OwlcatModificationsManager_IsAnyModActive
 {
     [HarmonyPrefix]
+    [HarmonyAfter("0ToyBox0")]
     public static bool Prefix(ref bool __result)
     {
         __result = false;
@@ -19,6 +20,7 @@ public static class OwlcatModificationsManager_IsAnyModActive
 public static class Player_ModsUser
 {
     [HarmonyPrefix]
+    [HarmonyAfter("0ToyBox0")]
     public static bool Prefix(ref bool __result)
     {
         __result = false;

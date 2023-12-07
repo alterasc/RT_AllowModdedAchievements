@@ -5,6 +5,16 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllowModdedAchievements", "AllowModdedAchievements\AllowModdedAchievements.csproj", "{965BA24F-C355-4E30-BB4C-6E4E3040867F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A317EAF-45F4-4659-9ABC-51C293A6CB88}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		allow-modded-achievements.png = allow-modded-achievements.png
+		LICENSE = LICENSE
+		README.md = README.md
+		Repository.json = Repository.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

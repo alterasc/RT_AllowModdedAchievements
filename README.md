@@ -14,9 +14,15 @@ Resulting structure of already existing UnityModManager folder should be as foll
 - `AllowModdedAchievements` (folder)
 	- `AllowModdedAchievements.dll`
 	- `Info.info`
+	- `OwlcatModificationManifest.json`
 
 ## How to build (for developers only)
 1. Set up RoguePath environment variable to point to game folder
 2. Restore nuget packages
 3. Clean Solution.
 4. Build (note that on build output is automatically copied to installation path).
+
+
+## Credits
+To Xenofell for making "Allow Modded Achievements" for Pathfinder: Wrath of the Righteous
+To Petirep for creating image meme used for thumbnail
