@@ -94,6 +94,10 @@
       <HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(RoguePath)\WH40KRT_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 
   <Target Name="Publicise" AfterTargets="BeforeBuild;Clean" Inputs="@(PubliciseInputAssemblies)" Outputs="$(SolutionDir)lib\%(PubliciseInputAssemblies.FileName)_public.dll;$(SolutionDir)lib\%(PubliciseInputAssemblies.FileName)_public.hash">

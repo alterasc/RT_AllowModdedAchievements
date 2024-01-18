@@ -1,6 +1,6 @@
 {
   "UniqueName": "AllowModdedAchievements",
-  "Version": "1.0.0",
+  "Version": "1.1.0",
   "DisplayName": "Allow Modded Achievements",
   "Description": "Allows achievements while modded.\nIf you use Toy Box checkbox you don't need it.\nIf you install both this and Toy Box, this mod applies regardless of Toy Box checkbox state.",
   "Author": "AlterAsc",
